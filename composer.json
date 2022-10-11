@@ -1,0 +1,35 @@
+{
+  "name": "lundalogik/laravel-newsletter-driver",
+  "description": "A demo package",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "John Doe",
+      "email": "john@doe.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Lundalogik\\NewsletterDriver\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lundalogik\\NewsletterDriver\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lundalogik\\NewsletterDriver\\NewsletterMailServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.0"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
