@@ -1,12 +1,11 @@
 {
   "name": "lundalogik/laravel-newsletter-driver",
-  "description": "A demo package",
+  "description": "Lime Newsletter mail driver for Laravel",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
-      "name": "John Doe",
-      "email": "john@doe.com"
+      "name": "Lundalogik"
     }
   ],
   "autoload": {
