@@ -23,7 +23,7 @@ composer require lundalogik/laravel-newsletter-driver
 Change default mail driver and add new variables to your **.env** file:
 
 ```php
-MAIL_DRIVER=newsletter
+MAIL_MAILER=newsletter #MAIL_DRIVER for Laravel < 7.x
 
 LIME_NEWSLETTER_API_KEY=YOUR_NEWSLETTER_API_KEY
 LIME_NEWSLETTER_USER_EMAIL=YOUR_NEWSLETTER_USER_EMAIL
