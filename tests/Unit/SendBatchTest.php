@@ -12,11 +12,11 @@ use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
 
-class TransactionMailTest extends TestCase
+class SendBatchTest extends TestCase
 {
     protected $guzzleMiddlewareContainer = [];
 
-    protected function sendEndpointExampleResponse()
+    protected function exampleResponse()
     {
         return '{
             "SentTransactionMailModels": [
@@ -117,7 +117,7 @@ class TransactionMailTest extends TestCase
         $mock = new MockHandler([
             new Response(200,
                 ['Content-Type' => 'application/json'],
-                $this->sendEndpointExampleResponse()
+                $this->exampleResponse()
             ),
         ]);
 
@@ -166,7 +166,7 @@ class TransactionMailTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         $this->assertEquals(
-            $this->sendEndpointExampleResponse(),
+            $this->exampleResponse(),
             $response->getBody()->getContents()
         );
     }
