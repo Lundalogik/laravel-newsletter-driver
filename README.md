@@ -15,7 +15,7 @@ Add the following to your ``composer.json``
 
 Then run 
 ```
-composer require lundalogik/laravel-newsletter-driver
+composer require lundalogik/laravel-newsletter-driver:dev-main
 ```
 
 ## Configuration
