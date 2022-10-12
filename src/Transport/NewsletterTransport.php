@@ -82,7 +82,7 @@ class NewsletterTransport extends Transport
     }
 
     /**
-     * Get an array of AttachmentModel from the mssage
+     * Get an array of AttachmentModel from the message
      *
      * @param Swift_Mime_SimpleMessage $message
      * @return AttachmentModel[]
