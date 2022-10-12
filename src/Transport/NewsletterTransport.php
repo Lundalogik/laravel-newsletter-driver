@@ -41,7 +41,7 @@ class NewsletterTransport extends Transport
 
         try {
             $this->api->sendBatch(
-                $this->getSendTransactionMailBatchArgs($message),
+                $this->getSendTransactionMailBatchArgs($message)
             );
         } catch (GuzzleException $e) {
             throw new Swift_TransportException('Request to Newsletter API failed.', $e->getCode(), $e);
