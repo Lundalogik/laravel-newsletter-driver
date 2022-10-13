@@ -2,9 +2,9 @@
 
 namespace Lundalogik\NewsletterDriver\Newsletter;
 
-use \GuzzleHttp\Psr7\Response;
-use \GuzzleHttp\ClientInterface;
-use \GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Response;
 
 class TransactionMail
 {

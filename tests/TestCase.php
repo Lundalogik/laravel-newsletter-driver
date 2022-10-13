@@ -2,8 +2,8 @@
 
 namespace Lundalogik\NewsletterDriver\Tests;
 
-use \Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Lundalogik\NewsletterDriver\NewsletterMailServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {

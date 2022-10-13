@@ -3,7 +3,7 @@
 namespace Lundalogik\NewsletterDriver;
 
 use Exception;
-use \GuzzleHttp\Client;
+use GuzzleHttp\Client;
 use Illuminate\Mail\MailServiceProvider;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Lundalogik\NewsletterDriver\Transport\NewsletterTransport;
@@ -37,8 +37,8 @@ class NewsletterMailServiceProvider extends MailServiceProvider
 
         $client = new Client([
             'base_uri' => "{$config['base_url']}{$config['account']}/api/",
-            'headers'  => [
-                'apikey'    => $config['api_key'],
+            'headers' => [
+                'apikey' => $config['api_key'],
                 'useremail' => $config['user_email'],
             ],
         ]);

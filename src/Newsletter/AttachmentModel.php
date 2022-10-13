@@ -33,9 +33,9 @@ class AttachmentModel
     public function toArray()
     {
         return [
-            'FileData'              => $this->fileData,
+            'FileData' => $this->fileData,
             'FileNameWithExtension' => $this->fileNameWithExtension,
-            'MimeType'              => $this->mimeType,
+            'MimeType' => $this->mimeType,
         ];
     }
 

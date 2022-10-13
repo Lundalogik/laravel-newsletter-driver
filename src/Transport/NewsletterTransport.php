@@ -2,15 +2,15 @@
 
 namespace Lundalogik\NewsletterDriver\Transport;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Mail\Transport\Transport;
+use Lundalogik\NewsletterDriver\Newsletter\AttachmentModel;
+use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
+use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
+use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Swift_Mime_Attachment;
 use Swift_Mime_SimpleMessage;
 use Swift_TransportException;
-use Illuminate\Mail\Transport\Transport;
-use GuzzleHttp\Exception\GuzzleException;
-use Lundalogik\NewsletterDriver\Newsletter\AttachmentModel;
-use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
-use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
-use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
 
 class NewsletterTransport extends Transport
 {
@@ -65,10 +65,10 @@ class NewsletterTransport extends Transport
         $from = $message->getFrom();
 
         [$fromEmail] = array_keys($from);
-        [$fromName]  = array_values($from);
+        [$fromName] = array_values($from);
 
         foreach ($message->getTo() as $toEmail => $toName) {
-            $sendTransactionMailArgs[] = (new SendTransactionMailArgs)
+            $sendTransactionMailArgs[] = (new SendTransactionMailArgs())
                 ->to($toEmail, $toName)
                 ->from($fromEmail, $fromName)
                 ->subject($message->getSubject())
@@ -94,7 +94,7 @@ class NewsletterTransport extends Transport
                 return $child->getHeaders()->get('content-disposition') !== null;
             })
             ->map(function (Swift_Mime_Attachment $attachment) {
-                return (new AttachmentModel)
+                return (new AttachmentModel())
                     ->fileData($attachment->getBody())
                     ->fileNameWithExtension($attachment->getFilename())
                     ->mimeType($attachment->getContentType());

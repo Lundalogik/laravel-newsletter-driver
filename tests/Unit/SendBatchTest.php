@@ -2,15 +2,14 @@
 
 namespace Lundalogik\NewsletterDriver\Tests;
 
-use \GuzzleHttp\Client;
-use \GuzzleHttp\Middleware;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use \GuzzleHttp\Handler\MockHandler;
-use Lundalogik\NewsletterDriver\Tests\TestCase;
-use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
+use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 
 class SendBatchTest extends TestCase
 {
@@ -115,7 +114,8 @@ class SendBatchTest extends TestCase
     protected function getMockGuzzleClient()
     {
         $mock = new MockHandler([
-            new Response(200,
+            new Response(
+                200,
                 ['Content-Type' => 'application/json'],
                 $this->exampleResponse()
             ),
@@ -128,10 +128,10 @@ class SendBatchTest extends TestCase
         $handlerStack->push($history);
 
         $client = new Client([
-            'handler'  => $handlerStack,
+            'handler' => $handlerStack,
             'base_uri' => 'https://qa.bwz.se/bedrock/mock-account/api/',
-            'headers'  => [
-                'apikey'    => 'mock-key',
+            'headers' => [
+                'apikey' => 'mock-key',
                 'useremail' => 'mock@email.com',
             ],
         ]);
@@ -141,7 +141,7 @@ class SendBatchTest extends TestCase
 
     public function test_it_sends_a_transaction_mail_using_the_sendbatch_endpoint()
     {
-        $recipient = (new SendTransactionMailArgs)
+        $recipient = (new SendTransactionMailArgs())
             ->to('george.costanza@mail.com', 'George Costanza')
             ->from('art.vandelay@import-export.com', 'Art Vandelay')
             ->subject('Subject')
@@ -160,7 +160,8 @@ class SendBatchTest extends TestCase
         );
 
         $this->assertEquals(
-            (string) $request->getBody(), json_encode($sendTransactionMailBatchArgs->toArray())
+            (string) $request->getBody(),
+            json_encode($sendTransactionMailBatchArgs->toArray())
         );
 
         $this->assertEquals(200, $response->getStatusCode());

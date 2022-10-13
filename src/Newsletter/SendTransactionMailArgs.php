@@ -61,13 +61,13 @@ class SendTransactionMailArgs
     public function toArray()
     {
         $data = [
-            'HtmlContent'    => $this->htmlContent,
-            'TextContent'    => $this->textContent,
-            'RecipientName'  => $this->toName,
+            'HtmlContent' => $this->htmlContent,
+            'TextContent' => $this->textContent,
+            'RecipientName' => $this->toName,
             'RecipientEmail' => $this->toEmail,
-            'FromName'       => $this->fromName,
-            'FromEmail'      => $this->fromEmail,
-            'Subject'        => $this->subject,
+            'FromName' => $this->fromName,
+            'FromEmail' => $this->fromEmail,
+            'Subject' => $this->subject,
         ];
 
         if (is_null($this->htmlContent)) {

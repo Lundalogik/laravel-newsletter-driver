@@ -30,7 +30,7 @@ class SendTransactionMailBatchArgs
                 return $arg->toArray();
             }, $this->sendTransactionMailArgs),
 
-            'BatchAttachments'        => array_map(function (AttachmentModel $attachment) {
+            'BatchAttachments' => array_map(function (AttachmentModel $attachment) {
                 return $attachment->toArray();
             }, $this->batchAttachmentsArgs),
         ];
