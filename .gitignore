@@ -12,4 +12,5 @@ npm-debug.log
 composer.lock
 /bin/
 
+.php-cs-fixer.cache
 .phpunit.result.cache
