@@ -17,12 +17,3 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - run: npx semantic-release@18
-        id: semantic
-        with:
-          semantic_version: ${{ matrix.semantic-version }}
-          branches: |
-            [
-              "main"
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
