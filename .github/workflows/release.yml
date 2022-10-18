@@ -7,6 +7,8 @@ on:
 
 jobs:
   semantic-release:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     name: Semantic Release Flow
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     strategy:
@@ -15,7 +17,7 @@ jobs:
         os: [ubuntu-latest]
         semantic-version: [17.3.9]
     runs-on: ${{ matrix.os }}
+
     steps:
+      - uses: actions/checkout@v2
       - run: npx semantic-release@18
-     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
