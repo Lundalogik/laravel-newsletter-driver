@@ -16,8 +16,7 @@ jobs:
         semantic-version: [17.3.9]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: cycjimmy/semantic-release-action@v2
+      - run: npx semantic-release@18
         id: semantic
         with:
           semantic_version: ${{ matrix.semantic-version }}
