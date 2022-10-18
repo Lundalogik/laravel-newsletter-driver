@@ -1,0 +1,29 @@
+name: Semantic Release Flow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  semantic-release:
+    name: Semantic Release Flow
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        semantic-version: [17.3.9]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          semantic_version: ${{ matrix.semantic-version }}
+          branches: |
+            [
+              "main"
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
