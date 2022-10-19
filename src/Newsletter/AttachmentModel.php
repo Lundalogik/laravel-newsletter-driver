@@ -28,7 +28,7 @@ class AttachmentModel
     /**
      * Convert this AttachmentModel to an array
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray()
     {

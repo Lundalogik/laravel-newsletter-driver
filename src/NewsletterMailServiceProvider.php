@@ -31,7 +31,7 @@ class NewsletterMailServiceProvider extends MailServiceProvider
         }
     }
 
-    protected function newsletterTransport()
+    protected function newsletterTransport(): NewsletterTransport
     {
         $config = $this->app['config']->get('services.newsletter', []);
 

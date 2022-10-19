@@ -2,10 +2,13 @@
 
 namespace Lundalogik\NewsletterDriver\Newsletter;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * @template-covariant Response
+ */
 class TransactionMail
 {
     protected const URI = 'transactionmail';
@@ -13,16 +16,16 @@ class TransactionMail
     /**
      * HTTP Client.
      *
-     * @var ClientInterface
+     * @var Client
      */
     protected $httpClient;
 
     /**
      * Create a new instance.
      *
-     * @param ClientInterface $httpClient
+     * @param Client $httpClient
      */
-    public function __construct(ClientInterface $httpClient)
+    public function __construct(Client $httpClient)
     {
         $this->httpClient = $httpClient;
     }

@@ -2,6 +2,7 @@
 
 namespace Lundalogik\NewsletterDriver\Transport;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Mail\Transport\Transport;
 use Lundalogik\NewsletterDriver\Newsletter\AttachmentModel;
@@ -44,7 +45,11 @@ class NewsletterTransport extends Transport
                 $this->getSendTransactionMailBatchArgs($message)
             );
         } catch (GuzzleException $e) {
-            throw new Swift_TransportException('Request to Newsletter API failed.', $e->getCode(), $e);
+            throw new Swift_TransportException(
+                'Request to Newsletter API failed.',
+                $e->getCode(),
+                new Exception($e)
+            );
         }
 
         $this->sendPerformed($message);

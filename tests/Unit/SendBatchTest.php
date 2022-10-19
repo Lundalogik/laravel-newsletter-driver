@@ -13,9 +13,14 @@ use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 
 class SendBatchTest extends TestCase
 {
+    /**
+     * Container for Guzzle Middleware
+     *
+     * @var mixed[]
+     */
     protected $guzzleMiddlewareContainer = [];
 
-    protected function exampleResponse()
+    protected function exampleResponse(): string
     {
         return '{
             "SentTransactionMailModels": [
@@ -111,7 +116,7 @@ class SendBatchTest extends TestCase
         }';
     }
 
-    protected function getMockGuzzleClient()
+    protected function getMockGuzzleClient(): Client
     {
         $mock = new MockHandler([
             new Response(
@@ -139,7 +144,7 @@ class SendBatchTest extends TestCase
         return $client;
     }
 
-    public function test_it_sends_a_transaction_mail_using_the_sendbatch_endpoint()
+    public function test_it_sends_a_transaction_mail_using_the_sendbatch_endpoint(): void
     {
         $recipient = (new SendTransactionMailArgs())
             ->to('george.costanza@mail.com', 'George Costanza')

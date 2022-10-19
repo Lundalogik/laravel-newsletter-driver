@@ -56,7 +56,7 @@ class SendTransactionMailArgs
     /**
      * Convert this TransactionMail to an array
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray()
     {
@@ -70,7 +70,7 @@ class SendTransactionMailArgs
             'Subject' => $this->subject,
         ];
 
-        if (is_null($this->htmlContent)) {
+        if ($this->htmlContent !== null) {
             $data['TextContent'] = $this->textContent;
         } else {
             $data['HtmlContent'] = $this->htmlContent;

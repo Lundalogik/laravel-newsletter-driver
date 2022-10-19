@@ -21,7 +21,7 @@ class SendTransactionMailBatchArgs
     /**
      * Convert these batch messages to an array
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray()
     {
