@@ -9,7 +9,7 @@
 
 ## Installation
 
-Supports **only Laravel > 7.0**
+Supports **only Laravel > 7.0**.
 
 Add the following to your ``composer.json``
 
