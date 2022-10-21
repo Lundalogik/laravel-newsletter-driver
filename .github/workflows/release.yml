@@ -19,6 +19,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.CREATE_RELEASE }}
+          fetch-depth: 0
       - run: npm install -g '@limetech/semantic-release-laravel' --no-package-lock --silent
       - uses: cycjimmy/semantic-release-action@v2
         id: semantic
