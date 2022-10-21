@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - run: npm install -g '@limetech/semantic-release-laravel' --no-package-lock
+      - run: npm install -g '@limetech/semantic-release-laravel' --no-package-lock --silent
       - uses: cycjimmy/semantic-release-action@v2
         id: semantic
         with:
@@ -32,7 +32,9 @@ jobs:
               {"name": "next", "prerelease": true},
             ]
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CREATE_RELEASE }}
+          GH_USERNAME: lime-ci
+          GH_TOKEN: ${{ secrets.CREATE_RELEASE }}
 
       - run: curl -XPOST -H'content-type:application/json' 'https://packagist.org/api/update-package?username=lime-technologies&apiToken=${{ secrets.PACKAGIST_TOKEN }}' -d'{"repository":{"url":"https://packagist.org/packages/lundalogik/laravel-newsletter-driver"}}'
         if: steps.semantic.outputs.new_release_published == 'true'
