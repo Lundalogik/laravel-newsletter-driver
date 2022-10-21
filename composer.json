@@ -1,36 +1,36 @@
 {
-  "name": "lundalogik/laravel-newsletter-driver",
-  "description": "Laravel Lime Newsletter Mail Driver",
-  "type": "library",
-  "license": "MIT",
-  "version": "1.10",
-  "authors": [
-    {
-      "name": "Lundalogik"
+    "name": "lundalogik/laravel-newsletter-driver",
+    "description": "Laravel Lime Newsletter Mail Driver",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.1.0",
+    "authors": [
+        {
+            "name": "Lundalogik"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lundalogik\\NewsletterDriver\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lundalogik\\NewsletterDriver\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lundalogik\\NewsletterDriver\\NewsletterMailServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0"
+    },
+    "require": {
+        "php": ">=7.4",
+        "guzzlehttp/guzzle": "^7.0"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Lundalogik\\NewsletterDriver\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Lundalogik\\NewsletterDriver\\Tests\\": "tests"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Lundalogik\\NewsletterDriver\\NewsletterMailServiceProvider"
-      ]
-    }
-  },
-  "require-dev": {
-    "orchestra/testbench": "^6.0"
-  },
-  "require": {
-    "php": ">=7.4",
-    "guzzlehttp/guzzle": "^7.0"
-  }
 }
