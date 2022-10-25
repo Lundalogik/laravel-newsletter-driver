@@ -7,6 +7,9 @@
 
 [Lime Technologies](https://www.lime-technologies.com/)
 
+## What is Lime Newsletter?
+Lime Newsletter is a Lime CRM add-on for creating and sending email campaigns and newsletters. Benefits include: personalization with CRM data, email templates, dynamic content, and subscriber management
+
 ## Installation
 
 Supports **only Laravel > 7.0**.
