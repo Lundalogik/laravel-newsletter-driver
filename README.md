@@ -8,7 +8,9 @@
 [Lime Technologies](https://www.lime-technologies.com/)
 
 ## What is Lime Newsletter?
-Lime Newsletter is a Lime CRM add-on for creating and sending email campaigns and newsletters. Benefits include: personalization with CRM data, email templates, dynamic content, and subscriber management
+Lime Newsletter is a Lime CRM add-on for creating and sending email campaigns and newsletters. Benefits include: personalization with CRM data, email templates, dynamic content, and subscriber management.
+
+[Lime Newsletter](https://www.lime-technologies.com/en/add-on/lime-newsletter/)
 
 ## Installation
 
