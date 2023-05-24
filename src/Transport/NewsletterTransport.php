@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Mail\Transport\Transport;
 use Lundalogik\NewsletterDriver\Newsletter\AttachmentModel;
+use Lundalogik\NewsletterDriver\Newsletter\SendingDomain;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
