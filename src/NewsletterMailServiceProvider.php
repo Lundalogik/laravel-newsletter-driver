@@ -33,13 +33,13 @@ class NewsletterMailServiceProvider extends MailServiceProvider
 
     public function register()
     {
+        parent::register();
         // register a custom api class for newsletter, which can contain operations that are not related to mailing/backend work.
         // see here: https://stackoverflow.com/questions/45794683/how-to-create-aliases-in-laravel
         $this->app->singleton(NewsletterApi::class, function () {
             $client = $this->getHttpClient();
             return new NewsletterApi($client);
         });
-        $this->app->alias(NewsletterApi::class, 'Newsletter');
     }
 
     protected function newsletterTransport(): NewsletterTransport
@@ -53,10 +53,10 @@ class NewsletterMailServiceProvider extends MailServiceProvider
 
     public function provides()
     {
-        return [
+        return array_merge(parent::provides(), [
             NewsletterApi::class,
             'Newsletter'
-        ];
+        ]);
     }
 
     protected function getHttpClient(): Client
