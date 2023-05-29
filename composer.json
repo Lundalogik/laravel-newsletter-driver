@@ -3,7 +3,7 @@
     "description": "Laravel Lime Newsletter Mail Driver",
     "type": "library",
     "license": "MIT",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "authors": [
         {
             "name": "Lundalogik"
