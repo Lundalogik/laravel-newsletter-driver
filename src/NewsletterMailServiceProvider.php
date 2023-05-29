@@ -54,8 +54,7 @@ class NewsletterMailServiceProvider extends MailServiceProvider
     public function provides()
     {
         return array_merge(parent::provides(), [
-            NewsletterApi::class,
-            'Newsletter'
+            NewsletterApi::class
         ]);
     }
 
