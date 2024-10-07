@@ -4,24 +4,25 @@ namespace Lundalogik\NewsletterDriver\Transport;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Mail\Transport\Transport;
+use Symfony\Component\Mailer\Envelope;
+use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Mailer\Transport\AbstractTransport;
 use Lundalogik\NewsletterDriver\Newsletter\AttachmentModel;
-use Lundalogik\NewsletterDriver\Newsletter\SendingDomain;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailArgs;
 use Lundalogik\NewsletterDriver\Newsletter\SendTransactionMailBatchArgs;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
-use Swift_Mime_Attachment;
-use Swift_Mime_SimpleMessage;
-use Swift_TransportException;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mailer\SentMessage;
 
-class NewsletterTransport extends Transport
+class NewsletterTransport extends AbstractTransport
 {
     /**
      * TransactionMail instance.
      *
      * @var TransactionMail
      */
-    protected $api;
+    protected TransactionMail $api;
 
     /**
      * Create a new NewsletterTransport instance.
@@ -32,53 +33,56 @@ class NewsletterTransport extends Transport
     public function __construct(TransactionMail $api)
     {
         $this->api = $api;
+
+        parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * Send the given message.
+     * Triggered by parent::send()
+     *
+     * @param SentMessage $message
+     * @return void
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    protected function doSend(SentMessage $message): void
     {
-        $this->beforeSendPerformed($message);
-
         try {
-            $this->api->sendBatch(
-                $this->getSendTransactionMailBatchArgs($message)
-            );
+            $originalMessage = $message->getOriginalMessage();
+            if ($originalMessage instanceof Email) {
+                $this->api->sendBatch(
+                    $this->getSendTransactionMailBatchArgs($message->getEnvelope(), $originalMessage)
+                );
+            }
         } catch (GuzzleException $e) {
-            throw new Swift_TransportException(
+            throw new TransportException(
                 'Request to Newsletter API failed.',
                 $e->getCode(),
                 new Exception($e)
             );
         }
-
-        $this->sendPerformed($message);
-
-        return $this->numberOfRecipients($message);
     }
+
 
     /**
      * Get the SendTransactionMailBatchArgs from the message
      *
-     * @param Swift_Mime_SimpleMessage $message
+     * @param Envelope $envelope
+     * @param Email $message
      * @return SendTransactionMailBatchArgs
      */
-    protected function getSendTransactionMailBatchArgs(Swift_Mime_SimpleMessage $message)
+    protected function getSendTransactionMailBatchArgs(Envelope $envelope, Email $message): SendTransactionMailBatchArgs
     {
         $sendTransactionMailArgs = [];
 
-        $from = $message->getFrom();
+        $fromEmail = $envelope->getSender()->getAddress();
+        $fromName = $envelope->getSender()->getName();
 
-        [$fromEmail] = array_keys($from);
-        [$fromName] = array_values($from);
-
-        foreach ($message->getTo() as $toEmail => $toName) {
+        foreach ($envelope->getRecipients() as $index => $to) {
             $sendTransactionMailArgs[] = (new SendTransactionMailArgs())
-                ->to($toEmail, $toName)
+                ->to($to->getAddress(), $to->getName())
                 ->from($fromEmail, $fromName)
                 ->subject($message->getSubject())
-                ->htmlContent($message->getBody());
+                ->htmlContent($message->getHtmlBody());
         }
 
         return new SendTransactionMailBatchArgs(
@@ -90,21 +94,29 @@ class NewsletterTransport extends Transport
     /**
      * Get an array of AttachmentModel from the message
      *
-     * @param Swift_Mime_SimpleMessage $message
+     * @param Email $message
      * @return AttachmentModel[]
      */
-    protected function buildAttachmentModels(Swift_Mime_SimpleMessage $message)
+    protected function buildAttachmentModels(Email $message): array
     {
-        return collect($message->getChildren())
-            ->filter(function ($child) {
-                return $child->getHeaders()->get('content-disposition') !== null;
+        return collect($message->getAttachments())
+            ->filter(function (DataPart $child) {
+                return $child->getPreparedHeaders()->get('Content-Disposition') !== null;
             })
-            ->map(function (Swift_Mime_Attachment $attachment) {
+            ->map(function (DataPart $attachment) {
                 return (new AttachmentModel())
                     ->fileData($attachment->getBody())
                     ->fileNameWithExtension($attachment->getFilename())
                     ->mimeType($attachment->getContentType());
             })
             ->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return "newsletter";
     }
 }

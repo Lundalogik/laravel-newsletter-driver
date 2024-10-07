@@ -2,45 +2,19 @@ name: CI(PhpStan -> PhpUnit)
 
 on:
   pull_request:
-    branches:
-      - "*"
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
-  phpstan:
-    runs-on: ubuntu-latest
-    if: (!contains(github.event.head_commit.message, '[skip ci]'))
-    steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v6
-      - uses: php-actions/phpstan@v3
-        with:
-          memory_limit: 512M
-          configuration: ./phpstan.neon
-
   php-tests:
     if: (!contains(github.event.head_commit.message, '[skip ci]'))
-    needs: [phpstan]
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php: [8.1, 8.0, 7.4]
-        laravel: [7.*, 8.*, 9.*]
+        php: [8.1, 8.2, 8.3]
+        laravel: [10.*]
         dependency-version: [prefer-lowest, prefer-stable]
         include:
-          - laravel: 9.*
-            testbench: 7.*
-          - laravel: 8.*
-            testbench: 6.23
-          - laravel: 7.*
-            testbench: 5.*
-        exclude:
-          - laravel: 9.*
-            php: 7.4
-          # https://bytexd.com/fix-laravel-return-type-of-illuminatesupportcollectionoffsetexistskey/
-          - laravel: 7.*
-            php: 8.1
+          - laravel: 10.*
+            testbench: 8.*
 
     runs-on: ${{ matrix.os }}
 
@@ -55,4 +29,13 @@ jobs:
           coverage: none
       - run: composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --dev
       - run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
-      - run: vendor/bin/phpunit
+      - run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Static analysis
+        run: vendor/bin/phpstan --memory-limit=512M analyze
+
+      - name: Migrate phpunit schema
+        run: vendor/bin/phpunit --migrate-configuration
+
+      - name: Unit testing
+        run: vendor/bin/phpunit

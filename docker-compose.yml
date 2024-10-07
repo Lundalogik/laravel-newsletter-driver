@@ -1,0 +1,25 @@
+services:
+  php:
+    image: php:8.3-fpm  # Or any other version you want
+    volumes:
+      - ./:/var/www/html  # Mount the current directory to the container
+    working_dir: /var/www/html
+    ports:
+      - "8088:80"
+    depends_on:
+      - composer
+    networks:
+      - newsletter-driver-network
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/var/www/html  # Same mount so composer can install dependencies
+    working_dir: /var/www/html
+    networks:
+      - newsletter-driver-network
+    entrypoint: ['composer']
+
+networks:
+  newsletter-driver-network:
+    driver: bridge
