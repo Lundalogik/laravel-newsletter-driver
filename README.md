@@ -14,7 +14,12 @@ Lime Newsletter is a Lime CRM add-on for creating and sending email campaigns an
 
 ## Installation
 
-Supports **only Laravel > 7.0**.
+### Supported Laravel versions
+
+| Laravel version | Release version |
+|-----------------|-----------------|
+| 7.x, 8.x,       | 1.x             |
+| 9.x, 10.x       | 2.x             |
 
 Add the following to your ``composer.json``
 
