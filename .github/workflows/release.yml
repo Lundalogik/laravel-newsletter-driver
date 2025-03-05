@@ -14,16 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-24.04]
         semantic-version: [17.3.9]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
         with:
           token: ${{ secrets.CREATE_RELEASE }}
           fetch-depth: 0
       - run: npm install -g '@limetech/semantic-release-laravel' --no-package-lock --silent
-      - uses: cycjimmy/semantic-release-action@v2
+      - uses: cycjimmy/semantic-release-action@5982a02995853159735cb838992248c4f0f16166 # v2.7.0
         id: semantic
         with:
           semantic_version: ${{ matrix.semantic-version }}
