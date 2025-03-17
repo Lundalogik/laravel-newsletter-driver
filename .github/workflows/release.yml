@@ -11,12 +11,7 @@ jobs:
   semantic-release:
     name: Semantic Release Flow
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04]
-        semantic-version: [17.3.9]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2.7.0
         with:
@@ -26,7 +21,7 @@ jobs:
       - uses: cycjimmy/semantic-release-action@5982a02995853159735cb838992248c4f0f16166 # v2.7.0
         id: semantic
         with:
-          semantic_version: ${{ matrix.semantic-version }}
+          semantic_version: 17.3.9
           extends: '@limetech/semantic-release-laravel'
           branches: |
             [
