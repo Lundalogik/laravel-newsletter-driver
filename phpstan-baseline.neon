@@ -1,0 +1,121 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$name \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 2
+			path: src/Newsletter/SendTransactionMailArgs.php
+
+		-
+			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendTransactionMailArgs\\:\\:\\$fromName \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: src/Newsletter/SendTransactionMailArgs.php
+
+		-
+			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendTransactionMailArgs\\:\\:\\$toName \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: src/Newsletter/SendTransactionMailArgs.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendingDomain\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Newsletter/SendingDomain.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendingDomain\\:\\:all\\(\\) should return array but returns mixed\\.$#"
+			count: 1
+			path: src/Newsletter/SendingDomain.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendingDomain\\:\\:validate\\(\\) has parameter \\$domain with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Newsletter/SendingDomain.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\TransactionMail\\:\\:sendBatch\\(\\) should return Response but returns Psr\\\\Http\\\\Message\\\\ResponseInterface\\.$#"
+			count: 1
+			path: src/Newsletter/TransactionMail.php
+
+		-
+			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\NewsletterApi\\:\\:\\$domain has no type specified\\.$#"
+			count: 1
+			path: src/NewsletterApi.php
+
+		-
+			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\NewsletterApi\\:\\:\\$http has no type specified\\.$#"
+			count: 1
+			path: src/NewsletterApi.php
+
+		-
+			message: "#^Cannot access offset 'config' on Illuminate\\\\Contracts\\\\Foundation\\\\Application\\.$#"
+			count: 1
+			path: src/NewsletterMailServiceProvider.php
+
+		-
+			message: "#^Cannot call method extend\\(\\) on mixed\\.$#"
+			count: 2
+			path: src/NewsletterMailServiceProvider.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\NewsletterMailServiceProvider\\:\\:provides\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/NewsletterMailServiceProvider.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Transport\\\\NewsletterTransport\\:\\:__construct\\(\\) has parameter \\$api with generic class Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\TransactionMail but does not specify its types\\: Response$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Method Lundalogik\\\\NewsletterDriver\\\\Transport\\\\NewsletterTransport\\:\\:buildAttachmentModels\\(\\) should return array\\<Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\AttachmentModel\\> but returns array\\.$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendTransactionMailArgs\\:\\:htmlContent\\(\\) expects string, resource\\|string\\|null given\\.$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\AttachmentModel\\:\\:fileNameWithExtension\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Parameter \\#1 \\$subject of method Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendTransactionMailArgs\\:\\:subject\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\Transport\\\\NewsletterTransport\\:\\:\\$api with generic class Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\TransactionMail does not specify its types\\: Response$#"
+			count: 1
+			path: src/Transport/NewsletterTransport.php
+
+		-
+			message: "#^Cannot access offset 'FileNameWithExtensi…' on mixed\\.$#"
+			count: 1
+			path: tests/Unit/NewsletterTransportTest.php
+
+		-
+			message: "#^Cannot access offset 0 on mixed\\.$#"
+			count: 2
+			path: tests/Unit/NewsletterTransportTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
+			count: 1
+			path: tests/Unit/NewsletterTransportTest.php
+
+		-
+			message: "#^Cannot access offset 'request' on mixed\\.$#"
+			count: 1
+			path: tests/Unit/SendBatchTest.php
+
+		-
+			message: "#^Cannot call method getBody\\(\\) on mixed\\.$#"
+			count: 1
+			path: tests/Unit/SendBatchTest.php
+
+		-
+			message: "#^Cannot call method getUri\\(\\) on mixed\\.$#"
+			count: 1
+			path: tests/Unit/SendBatchTest.php
