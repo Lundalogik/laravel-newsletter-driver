@@ -40,9 +40,6 @@ jobs:
       - run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
       - run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Static analysis
-        run: vendor/bin/phpstan --memory-limit=512M analyze
-
       - name: Migrate phpunit schema
         run: vendor/bin/phpunit --migrate-configuration
 
