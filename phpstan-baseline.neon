@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$name \\(string\\) is implicitly nullable via default value null\\.$#"
-			count: 2
-			path: src/Newsletter/SendTransactionMailArgs.php
-
-		-
 			message: "#^Property Lundalogik\\\\NewsletterDriver\\\\Newsletter\\\\SendTransactionMailArgs\\:\\:\\$fromName \\(string\\) does not accept string\\|null\\.$#"
 			count: 1
 			path: src/Newsletter/SendTransactionMailArgs.php
