@@ -2,7 +2,6 @@
 
 namespace Lundalogik\NewsletterDriver;
 
-use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Mail\MailServiceProvider;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
@@ -19,16 +18,9 @@ class NewsletterMailServiceProvider extends MailServiceProvider
     {
         parent::registerIlluminateMailer();
 
-        try {
-            app('mail.manager')->extend('newsletter', function () {
-                return $this->newsletterTransport();
-            });
-        } catch (Exception $e) {
-            // laravel 5.x
-            app('swift.transport')->extend('newsletter', function () {
-                return $this->newsletterTransport();
-            });
-        }
+        app('mail.manager')->extend('newsletter', function () {
+            return $this->newsletterTransport();
+        });
     }
 
     public function register()
