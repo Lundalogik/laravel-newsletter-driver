@@ -20,7 +20,7 @@ Lime Newsletter is a Lime CRM add-on for creating and sending email campaigns an
 |-----------------|-----------------|
 | 7.x, 8.x,       | 1.x             |
 | 9.x, 10.x       | 2.x             |
-| 11.x, 12.x      | 3.x             |
+| 11.x, 12.x, 13.x| 3.x             |
 
 Add the following to your ``composer.json``
 
@@ -51,7 +51,7 @@ Add section to the **config/services.php** file:
 ],
 ```
 
-You also need to specify new available mail driver in **config/mail.php**:
+You also need to specify the newsletter mailer in **config/mail.php**:
 
 ```php
 'mailers' => [

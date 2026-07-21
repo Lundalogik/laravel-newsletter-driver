@@ -3,64 +3,84 @@
 namespace Lundalogik\NewsletterDriver;
 
 use GuzzleHttp\Client;
-use Illuminate\Mail\MailServiceProvider;
+use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\ServiceProvider;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Lundalogik\NewsletterDriver\Transport\NewsletterTransport;
 
-class NewsletterMailServiceProvider extends MailServiceProvider
+class NewsletterMailServiceProvider extends ServiceProvider
 {
     /**
-     * Register the Illuminate mailer instance.
-     *
      * @return void
      */
-    protected function registerIlluminateMailer()
+    public function boot(): void
     {
-        parent::registerIlluminateMailer();
-
-        app('mail.manager')->extend('newsletter', function () {
-            return $this->newsletterTransport();
+        Mail::extend('newsletter', function (array $config = []) {
+            return $this->newsletterTransport($config);
         });
     }
 
+    /**
+     * @return void
+     */
     public function register()
     {
-        parent::register();
         // register a custom api class for newsletter, which can contain operations that are not related to mailing/backend work.
         // see here: https://stackoverflow.com/questions/45794683/how-to-create-aliases-in-laravel
         $this->app->singleton(NewsletterApi::class, function () {
-            $client = $this->getHttpClient();
-            return new NewsletterApi($client);
+            return new NewsletterApi($this->getHttpClient());
         });
     }
 
-    protected function newsletterTransport(): NewsletterTransport
+    /**
+     * @param array<string, mixed> $config
+     *
+     * @return NewsletterTransport
+     */
+    protected function newsletterTransport(array $config = []): NewsletterTransport
     {
-        $client = $this->getHttpClient();
-
         return new NewsletterTransport(
-            new TransactionMail($client)
+            new TransactionMail($this->getHttpClient($config))
         );
     }
 
-    public function provides()
+    /**
+     * @return class-string[]
+     */
+    public function provides(): array
     {
-        return array_merge(parent::provides(), [
-            NewsletterApi::class
-        ]);
+        return [
+            NewsletterApi::class,
+        ];
     }
 
-    protected function getHttpClient(): Client
+    /**
+     * @param array<string, mixed> $config
+     *
+     * @return Client
+     */
+    protected function getHttpClient(array $config = []): Client
     {
-        $config = $this->app['config']->get('services.newsletter', []);
+        /** @var ConfigRepository $appConfig */
+        $appConfig = $this->app->make('config');
+        /** @var array<string, scalar|null> $serviceConfig */
+        $serviceConfig = $appConfig->array('services.newsletter', []);
 
-        $client = new Client([
-            'base_uri' => "{$config['base_url']}{$config['account']}/api/",
+        /** @var array<string, scalar|null> $config */
+        $config = array_merge($serviceConfig, $config);
+
+        $baseUrl = (string) ($config['base_url'] ?? '');
+        $account = (string) ($config['account'] ?? '');
+        $apiKey = (string) ($config['api_key'] ?? '');
+        $userEmail = (string) ($config['user_email'] ?? '');
+
+        return new Client([
+            'base_uri' => "{$baseUrl}{$account}/api/",
             'headers' => [
-                'apikey' => $config['api_key'],
-                'useremail' => $config['user_email'],
+                'apikey' => $apiKey,
+                'useremail' => $userEmail,
             ],
         ]);
-        return $client;
     }
 }

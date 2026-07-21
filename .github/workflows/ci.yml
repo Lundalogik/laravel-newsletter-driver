@@ -8,15 +8,57 @@ jobs:
     if: (!contains(github.event.head_commit.message, '[skip ci]'))
     strategy:
       matrix:
-        os: [ubuntu-24.04]
-        php: [8.2, 8.3]
-        laravel: [11.*, 12.*]
-        dependency-version: [prefer-lowest, prefer-stable]
         include:
-          - laravel: 11.*
+          - os: ubuntu-24.04
+            php: 8.2
+            laravel: 11.*
+            dependency-version: prefer-lowest
             testbench: ^9.2
-          - laravel: 12.*
+          - os: ubuntu-24.04
+            php: 8.2
+            laravel: 11.*
+            dependency-version: prefer-stable
+            testbench: ^9.2
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 11.*
+            dependency-version: prefer-lowest
+            testbench: ^9.2
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 11.*
+            dependency-version: prefer-stable
+            testbench: ^9.2
+          - os: ubuntu-24.04
+            php: 8.2
+            laravel: 12.*
+            dependency-version: prefer-lowest
             testbench: 10.*
+          - os: ubuntu-24.04
+            php: 8.2
+            laravel: 12.*
+            dependency-version: prefer-stable
+            testbench: 10.*
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 12.*
+            dependency-version: prefer-lowest
+            testbench: 10.*
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 12.*
+            dependency-version: prefer-stable
+            testbench: 10.*
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 13.*
+            dependency-version: prefer-lowest
+            testbench: ^11.0
+          - os: ubuntu-24.04
+            php: 8.3
+            laravel: 13.*
+            dependency-version: prefer-stable
+            testbench: ^11.0
 
     runs-on: ${{ matrix.os }}
 
@@ -29,11 +71,8 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: curl, pdo_sqlite
           coverage: none
-      - run: composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --dev
-      - run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
-
-      - name: Migrate phpunit schema
-        run: vendor/bin/phpunit --migrate-configuration
+      - run: composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --no-blocking --dev
+      - run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-blocking
 
       - name: Unit testing
         run: vendor/bin/phpunit
