@@ -30,9 +30,7 @@ class NewsletterMailServiceProvider extends ServiceProvider
         // register a custom api class for newsletter, which can contain operations that are not related to mailing/backend work.
         // see here: https://stackoverflow.com/questions/45794683/how-to-create-aliases-in-laravel
         $this->app->singleton(NewsletterApi::class, function () {
-            $client = $this->getHttpClient();
-
-            return new NewsletterApi($client);
+            return new NewsletterApi($this->getHttpClient());
         });
     }
 
@@ -43,10 +41,8 @@ class NewsletterMailServiceProvider extends ServiceProvider
      */
     protected function newsletterTransport(array $config = []): NewsletterTransport
     {
-        $client = $this->getHttpClient($config);
-
         return new NewsletterTransport(
-            new TransactionMail($client)
+            new TransactionMail($this->getHttpClient($config))
         );
     }
 
