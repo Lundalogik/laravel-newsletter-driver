@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
-use InvalidArgumentException;
 use Lundalogik\NewsletterDriver\Newsletter\TransactionMail;
 use Lundalogik\NewsletterDriver\Transport\NewsletterTransport;
 
@@ -65,14 +64,16 @@ class NewsletterMailServiceProvider extends ServiceProvider
     {
         /** @var ConfigRepository $appConfig */
         $appConfig = $this->app->make('config');
+        /** @var array<string, scalar|null> $serviceConfig */
         $serviceConfig = $appConfig->array('services.newsletter', []);
 
+        /** @var array<string, scalar|null> $config */
         $config = array_merge($serviceConfig, $config);
 
-        $baseUrl = $this->stringValue($config, 'base_url');
-        $account = $this->stringValue($config, 'account');
-        $apiKey = $this->stringValue($config, 'api_key');
-        $userEmail = $this->stringValue($config, 'user_email');
+        $baseUrl = (string) ($config['base_url'] ?? '');
+        $account = (string) ($config['account'] ?? '');
+        $apiKey = (string) ($config['api_key'] ?? '');
+        $userEmail = (string) ($config['user_email'] ?? '');
 
         return new Client([
             'base_uri' => "{$baseUrl}{$account}/api/",
@@ -81,24 +82,5 @@ class NewsletterMailServiceProvider extends ServiceProvider
                 'useremail' => $userEmail,
             ],
         ]);
-    }
-
-    /**
-     * @param array<string, mixed> $config
-     * @param string $key
-     *
-     * @return string
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function stringValue(array $config, string $key): string
-    {
-        $value = $config[$key] ?? null;
-
-        if (is_string($value) === false) {
-            throw new InvalidArgumentException("Newsletter config '{$key}' must be a string.");
-        }
-
-        return $value;
     }
 }
